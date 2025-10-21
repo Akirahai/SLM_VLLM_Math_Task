@@ -1,0 +1,1 @@
+Accuracy w/ greedy decoding: 0.2365

@@ -1,7 +1,3 @@
-Of course. Here is a simplified and easy-to-copy `README.md`.
-
-***
-
 # Zero-Shot Math LLM Evaluation
 
 A simple toolkit to evaluate Large Language Models (LLMs) on mathematical reasoning benchmarks using zero-shot prompting. It uses `vLLM` for fast inference and automates accuracy calculation.
@@ -81,6 +77,5 @@ python accuracy_evaluation.py \
 ---
 
 ## 🧭 Future Plans
-- [ ] Add token usage and latency tracking.
-- [ ] Implement unit tests.
-- [ ] Improve batch scripting for running multiple models in parallel.
+- Add token usage and latency tracking.
+- Improve batch scripting for running multiple models in parallel.

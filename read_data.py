@@ -32,11 +32,12 @@ def read_gsm8k(train = False):
     test_output = [remove_calc_annotations(i) for i in test_output]
     test_output = [i.replace("#### ", "The answer is ") for i in test_output]
     
+    test_question_type = ['Arithmetic'] * len(test_input)
 
     if train == True:
         return train_input, train_output
     else:
-        return test_input, test_output
+        return test_input, test_output, test_question_type
 
 def read_r2ata():
     df = pd.read_csv("datasets/r2ata.csv")
@@ -108,7 +109,11 @@ def read_asdiv():
 
 def read_math_500():
     dataset = load_dataset("HuggingFaceH4/MATH-500")
+    test_input = dataset.data['test']['question'].to_pylist()
+    test_output = dataset.data['test']['answer'].to_pylist()
+    test_question_type = dataset.data['test']['subject'].to_pylist()
 
+    return test_input, test_output, test_question_type
 
 def read_data(task, train=False):
     if task == 'gsm8k':
@@ -119,4 +124,8 @@ def read_data(task, train=False):
         return read_svamp()
     elif task == 'asdiv':
         return read_asdiv()
+    elif task == 'math_500':
+        return read_math_500()
+    else:
+        raise ValueError("Task not supported. Please choose from ['gsm8k', 'svamp', 'asdiv', 'r2ata', 'math_500']")
     

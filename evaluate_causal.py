@@ -113,20 +113,32 @@ if __name__== "__main__":
         stop_tokens = ['.', '\n'] + tokenizer.additional_special_tokens
         sampling_params = SamplingParams(temperature=0, top_p=1, max_tokens=MAX_LEN, stop=stop_tokens)
     tensor_parallel_size = 1
-    # llm = LLM(model="/home/long/long/code/DPO-ST/ft_models/llama-2/sft-0",tensor_parallel_size=tensor_parallel_size)
     llm = LLM(model=model_name,tensor_parallel_size=tensor_parallel_size)
 
-    test_accuracy = validate_causal(
+    test_results = validate_causal(
         llm, 
         sampling_params, 
         formated_input, 
         output, 
+        tokenizer=tokenizer,
         name=os.path.join(save_dir, f'results{tag}.csv'), 
         original_questions=input
     )
 
-    # Save accuracy result to a text file
+    # Extract individual metrics
+    test_accuracy = test_results['accuracy']
+    avg_latency = test_results['avg_latency']
+    avg_tokens = test_results['avg_generated_tokens']
+
+    # Save enhanced results to a text file
     with open(save_txt_dir, "w") as file:
-        message = f"Accuracy w/ greedy decoding: {test_accuracy:.4f}"
-        print(message)            # Print to console
-        print(message, file=file) # Write to file
+        message_accuracy = f"Accuracy w/ greedy decoding: {test_accuracy:.4f}"
+        message_latency = f"Average Latency: {avg_latency:.4f} seconds"
+        message_tokens = f"Average Generated Tokens: {avg_tokens:.2f}"
+        
+        full_message = f"{message_accuracy}\n{message_latency}\n{message_tokens}"
+        
+        print(message_accuracy)           # Print to console
+        print(message_latency)
+        print(message_tokens)
+        print(full_message, file=file)   # Write to file

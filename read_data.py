@@ -7,13 +7,11 @@ import pandas as pd
 
 from datasets import load_dataset
 
-zeroshot_cot_template = ("""You are an expert at solving math problems.
-Solve this problem step by step.
-Provide your final answer in \\boxed{{answer}} format.
+zeroshot_cot_template = ("""Solve this math problem step by step. Put your final answer in \\boxed{{}}.
 
 Problem: {instruction}""")
 
-zeroshot_noncot_template = ("""You are an expert at solving math problems. Provide your final answer in \\boxed{{answer}} format.
+zeroshot_noncot_template = ("""Solve this math problem step by step. Put your final answer in \\boxed{{}}.
 Problem: {instruction}
 The answer is \\boxed{{""")
 
